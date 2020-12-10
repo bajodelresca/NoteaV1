@@ -10,5 +10,6 @@ export const environment = {
         appId: "1:435366225492:web:d919e714fe94034701efc1",
         measurementId: "G-ZLF8B3FE7Y"
       },
-      notasColletion:"Notas"
+      notasColletion:"Notas",
+      userCollection:"User"
   };

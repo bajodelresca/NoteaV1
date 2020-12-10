@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Nota } from '../model/nota';
 import { EditNotaPage } from '../pages/edit-nota/edit-nota.page';
@@ -7,36 +7,39 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Shake } from '@ionic-native/shake/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { NotaPage } from '../pages/nota/nota.page';
+import { Shake } from '@ionic-native/shake/ngx';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+
+export class Tab1Page implements OnInit {
   public searchTerm: string = "";
   public listaNotas = [];
-  public items:any;
+  public items: any;
 
   constructor(private notasS: NotasService, private modalController: ModalController,
     private nativeStorage: NativeStorage,
     private authS: AuthService,
     private router: Router,
     private alertController: AlertController,
-    private shake: Shake,
+    public loadingController: LoadingController,
     public toastController: ToastController,
-    public loadingController: LoadingController) {
+    private shake: Shake) {
       this.shake.startWatch().subscribe(data => {
         this.router.navigate(['/tabs/tab2'])
         });      
 
+
   }
+
   setFilteredItems(ev: any) {
-   
   }
+
   async presentAlert(id: any) {
     const alert = await this.alertController.create({
       header: '¿Estás seguro que quieres borrar la nota?',
@@ -58,7 +61,14 @@ export class Tab1Page {
 
     await alert.present();
   }
- 
+
+  public async logout() {
+    await this.authS.logout();
+    if (!this.authS.isLogged()) {
+      this.router.navigate(['/login'])
+    }
+  }
+
   ngOnInit() {
     this.cargaDatos();
     //NATIVE STORAGE
@@ -73,12 +83,13 @@ export class Tab1Page {
         error => console.error(error)
       );
   }
-  ionViewDidEnter() {
-    //Mostrar el loading
 
+  ionViewDidEnter() {
+    this.notasS.loadCollection();
+    this.cargaDatos();
   }
-  public async cargaDatos($event = null) {
-    await this.presentLoading();
+
+  public cargaDatos($event = null) {
 
     try {
       this.notasS.leeNotas()
@@ -91,7 +102,7 @@ export class Tab1Page {
               ...doc.data()
             }
             this.listaNotas.push(nota);
-            this.items=this.listaNotas;
+            this.items = this.listaNotas;
           });
           //Ocultar loading
           console.log(this.listaNotas);
@@ -99,16 +110,11 @@ export class Tab1Page {
             $event.target.complete();
           }
         })
-        this.loadingController.dismiss();
-      this.presentToast("Notas cargadas","success");
     } catch (err) {
-      this.loadingController.dismiss();
-      this.presentToast("No se ha podido cargar","danger");
       //Error
     }
   }
-  public async borraNota(id: any) {
-    await this.presentLoading();
+  public borraNota(id: any) {
     this.notasS.borraNota(id).then(() => {
       //Ya está borrada
       let tmp = [];
@@ -118,14 +124,13 @@ export class Tab1Page {
         }
       })
       this.listaNotas = tmp;
-      this.items=this.listaNotas;
+      this.items = this.listaNotas;
+      //_______________________TOAST NOTA BORRADA
       this.loadingController.dismiss();
-      this.presentToast("Nota borrada","success");
+      this.presentToast("Nota eliminada correctamente", "success");
     })
       .catch(err => {
         //Error
-        this.loadingController.dismiss();
-      this.presentToast("No se ha podido borrar","danger");
       })
   }
   async editaNota(nota: Nota) {
@@ -138,6 +143,8 @@ export class Tab1Page {
     });
     return await modal.present();
   }
+
+  //__________________________________________________________TOAST
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -146,24 +153,30 @@ export class Tab1Page {
     });
     await loading.present();
   }
-  async presentToast(msg:string,col:string) {
+  async presentToast(msg: string, col: string) {
     const toast = await this.toastController.create({
       message: msg,
       color: col,
       duration: 2000,
-      position:"top"
+      position: "top"
     });
     toast.present();
   }
-  getItems(ev: any){
+  //__________________________________________________________TOAST
+
+  //__________________________________________________________SEARCHBAR
+  getItems(ev: any) {
     const val = ev.target.value;
     this.items = this.listaNotas;
-    if(val && val.trim()!= ''){
-      this.items = this.items.filter((data)=>{
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((data) => {
         return (data.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
+  //__________________________________________________________SEARCHBAR
+
+  //__________________________________________________________ENTRARNOTA
   public async abrirnota(nota:Nota){
     const modal= await this.modalController.create({
       component:NotaPage,
@@ -174,4 +187,5 @@ export class Tab1Page {
     });
     return await modal.present();
   }
+  //__________________________________________________________ENTRARNOTA
 }
