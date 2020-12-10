@@ -19,9 +19,10 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthService } from './services/auth.service';
 import { Flashlight } from '@ionic-native/flashlight/ngx';
 import { Shake } from '@ionic-native/shake/ngx';
+import { NotaPage } from './pages/nota/nota.page';
 @NgModule({
-  declarations: [AppComponent,EditNotaPage],
-  entryComponents: [EditNotaPage],
+  declarations: [AppComponent,EditNotaPage,NotaPage],
+  entryComponents: [EditNotaPage,NotaPage],
   imports: [BrowserModule, 
     ReactiveFormsModule,
     IonicModule.forRoot(), 

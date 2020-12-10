@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar class="toolbar">
+    <ion-title class="titlee">
       Añadir Tarea
     </ion-title>
   </ion-toolbar>
@@ -18,8 +18,8 @@
       auto-grow="true"></ion-textarea>
     </ion-item>
     <div style="text-align: right;">
-    <ion-button shape="round" color="primary" fill="outline" type="submit" [disabled]="!task.valid">
-      <ion-icon name="add-outline"></ion-icon>Añadir</ion-button>
+    <ion-button shape="round" fill="outline" type="submit" [disabled]="!task.valid" class="ad">
+      <ion-icon name="add-outline" class="ad"></ion-icon>Añadir</ion-button>
   </div>
   </form>
 </ion-content>

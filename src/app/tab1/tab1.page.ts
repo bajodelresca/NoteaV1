@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Shake } from '@ionic-native/shake/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { NotaPage } from '../pages/nota/nota.page';
 
 @Component({
   selector: 'app-tab1',
@@ -18,6 +19,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 export class Tab1Page {
   public searchTerm: string = "";
   public listaNotas = [];
+  public items:any;
 
   constructor(private notasS: NotasService, private modalController: ModalController,
     private nativeStorage: NativeStorage,
@@ -89,6 +91,7 @@ export class Tab1Page {
               ...doc.data()
             }
             this.listaNotas.push(nota);
+            this.items=this.listaNotas;
           });
           //Ocultar loading
           console.log(this.listaNotas);
@@ -115,6 +118,7 @@ export class Tab1Page {
         }
       })
       this.listaNotas = tmp;
+      this.items=this.listaNotas;
       this.loadingController.dismiss();
       this.presentToast("Nota borrada","success");
     })
@@ -151,5 +155,23 @@ export class Tab1Page {
     });
     toast.present();
   }
-    
+  getItems(ev: any){
+    const val = ev.target.value;
+    this.items = this.listaNotas;
+    if(val && val.trim()!= ''){
+      this.items = this.items.filter((data)=>{
+        return (data.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
+  public async abrirnota(nota:Nota){
+    const modal= await this.modalController.create({
+      component:NotaPage,
+      cssClass:'my-custom-note',
+      componentProps:{
+        nota:nota
+      }
+    });
+    return await modal.present();
+  }
 }
