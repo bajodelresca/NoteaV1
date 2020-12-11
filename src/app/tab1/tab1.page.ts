@@ -71,7 +71,7 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.cargaDatos();
-    //NATIVE STORAGE
+   
     this.nativeStorage.setItem('myitem', { property: 'value', anotherProperty: 'anotherValue' })
       .then(
         () => console.log('Stored item!'),
@@ -125,7 +125,7 @@ export class Tab1Page implements OnInit {
       })
       this.listaNotas = tmp;
       this.items = this.listaNotas;
-      //_______________________TOAST NOTA BORRADA
+      
       this.loadingController.dismiss();
       this.presentToast("Nota eliminada correctamente", "success");
     })
@@ -144,7 +144,7 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
-  //__________________________________________________________TOAST
+ 
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -162,9 +162,7 @@ export class Tab1Page implements OnInit {
     });
     toast.present();
   }
-  //__________________________________________________________TOAST
-
-  //__________________________________________________________SEARCHBAR
+  
   getItems(ev: any) {
     const val = ev.target.value;
     this.items = this.listaNotas;
@@ -174,9 +172,7 @@ export class Tab1Page implements OnInit {
       })
     }
   }
-  //__________________________________________________________SEARCHBAR
-
-  //__________________________________________________________ENTRARNOTA
+  
   public async abrirnota(nota:Nota){
     const modal= await this.modalController.create({
       component:NotaPage,
@@ -187,5 +183,5 @@ export class Tab1Page implements OnInit {
     });
     return await modal.present();
   }
-  //__________________________________________________________ENTRARNOTA
+  
 }
