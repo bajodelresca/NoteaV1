@@ -1,20 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="toolbar">
-    <ion-title class="titlee">
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-button (click)="this.botonlinterna()" expand="block" fill="outline" color="dark">
-    <div>
-      <ion-icon name="flashlight-outline"></ion-icon>
-      <label>Flash</label>
-  </div>
-  </ion-button>
-  <ion-button (click)="this.logout()" expand="block" fill="outline" color="danger">
-    <ion-icon name="exit-outline"></ion-icon>
-    <label>logout</label>
-  </ion-button>
-</ion-content>
+<body>
+  <ion-header [translucent]="true">
+    <ion-toolbar class="toolbar">
+      <ion-title class="titlee">
+        {{'PROFILE.title' | translate}}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content [fullscreen]="true">
+    <ion-label class="list">{{'PROFILE.user' | translate}}</ion-label>
+    <ion-item class="pad">
+      <ion-avatar slot="start">
+        <img [src]="usuario.avatar">
+      </ion-avatar>
+      <ion-label>{{usuario.name}}</ion-label>
+    </ion-item>
+    <ion-label class="list">{{'PROFILE.lng' | translate}}</ion-label>
+    <ion-item class="pad">
+      <ion-icon name="language-sharp"></ion-icon>
+      <ion-label>{{'PROFILE.language' | translate}}</ion-label>
+      <ion-select placeholder="{{lnga}}" [(ngModel)]="lang" (ionChange)="switchLanguage($event)" interface="action-sheet" >
+        <ion-select-option value="es">Español</ion-select-option>
+        <ion-select-option value="en">English</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-label class="list">{{'PROFILE.themes' | translate}}</ion-label>
+    <ion-item>
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>{{'PROFILE.dark' | translate}}</ion-label>
+      <ion-toggle slot="end" [ngModel]="darkMode" (ionChange)="switchtheme($event,0)" [disabled]="this.themeMode==1||this.themeMode==2"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="fish"></ion-icon>
+      <ion-label>{{'PROFILE.blue' | translate}}</ion-label>
+      <ion-toggle slot="end" [ngModel]="darkMode" (ionChange)="switchtheme($event,1)" [disabled]="this.themeMode==0||this.themeMode==2"></ion-toggle>
+    </ion-item>
+    <ion-item class="pad">
+      <ion-icon slot="start" name="bonfire"></ion-icon>
+      <ion-label>{{'PROFILE.orange' | translate}}</ion-label>
+      <ion-toggle slot="end" [ngModel]="darkMode" (ionChange)="switchtheme($event,2)" [disabled]="this.themeMode==0||this.themeMode==1"></ion-toggle>
+    </ion-item>
+    <ion-label class="list">{{'PROFILE.other' | translate}}</ion-label>
+    <ion-button (click)="this.botonlinterna()" expand="block" fill="outline" color="dark">
+      <div>
+        <ion-icon name="flashlight-outline"></ion-icon>
+        <label>{{'PROFILE.flash' | translate}}</label>
+      </div>
+    </ion-button>
+    <ion-button (click)="this.logout()" expand="block" fill="outline" color="danger">
+      <ion-icon name="exit-outline"></ion-icon>
+      <label>{{'PROFILE.logout' | translate}}</label>
+    </ion-button>    
+  </ion-content>
+</body>

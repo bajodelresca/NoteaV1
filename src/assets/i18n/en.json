@@ -1,0 +1,36 @@
+{
+    "HOME":{
+        "title":"Notes",
+        "bar":"Search"
+    },
+    "TABS":{
+        "tab1":"Notes",
+        "tab2":"Add",
+        "tab3":"Profile"
+    },
+    "ADD":{
+        "title":"Add Task",
+        "field1":"Tittle",
+        "field2":"Description",
+        "button":"Add",
+        "car":"Park!"
+    },
+    "PROFILE":{
+        "title":"Profile",
+        "language":"Selected Language",        
+        "dark":"Dark Mode",
+        "blue":"Blue Mode",
+        "orange":"Orange Mode",
+        "flash": "Flash",
+        "logout":"Logout",
+        "themes":"Themes",
+        "user":"User",
+        "lng":"Language",
+        "other":"Others"
+    },
+    "LOGIN":{
+        "title":"Login",
+        "login":"Login"
+        
+    }
+}

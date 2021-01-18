@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
@@ -20,12 +21,32 @@ import { AuthService } from './services/auth.service';
 import { Flashlight } from '@ionic-native/flashlight/ngx';
 import { Shake } from '@ionic-native/shake/ngx';
 import { NotaPage } from './pages/nota/nota.page';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { IonicStorageModule } from '@ionic/storage';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [AppComponent,EditNotaPage,NotaPage],
   entryComponents: [EditNotaPage,NotaPage],
-  imports: [BrowserModule, 
+  imports: [BrowserModule,    
     ReactiveFormsModule,
-    IonicModule.forRoot(), 
+    HttpClientModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(), 
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
     AppRoutingModule,AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule],
   providers: [
@@ -37,6 +58,10 @@ import { NotaPage } from './pages/nota/nota.page';
     AuthService,
     Flashlight,
     Shake,
+    TextToSpeech, 
+    Geolocation,
+    
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

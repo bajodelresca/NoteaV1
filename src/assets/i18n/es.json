@@ -1,0 +1,38 @@
+{
+    "HOME":{
+        "title":"Notas",
+        "bar":"Búsqueda"
+
+    },
+    "TABS":{
+        "tab1":"Notas",
+        "tab2":"Añadir",
+        "tab3":"Perfil"
+    },
+    "ADD":{
+        "title":"Añadir Tarea",
+        "field1":"Titulo",
+        "field2":"Descripción",
+        "button":"Añadir",
+        "car":"¡Aparcar!"
+    },
+    "PROFILE":{
+        "title":"Perfil",
+        "language":"Idioma seleccionado",
+        "dark":"Modo Oscuro",
+        "blue":"Modo Blue",
+        "orange":"Modo Orange",
+        "flash": "Linterna",
+        "logout":"Salir",
+        "themes":"Temas",
+        "user":"Usuario",
+        "lng":"Idioma",
+        "other":"Otros"
+    },
+    "LOGIN":{
+        "title":"Iniciar Sesion",
+        "login":"Iniciar Sesion"
+        
+    }
+    
+}

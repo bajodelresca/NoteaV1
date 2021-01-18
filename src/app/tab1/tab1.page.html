@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="toolbar">
     <ion-title class="titlee">
-      Notas
+      {{'HOME.title' | translate}}
       <ion-icon name="documents-outline" class="titleicon"></ion-icon>
     </ion-title>
     <div class="element">
       
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+      <ion-searchbar placeholder="{{'HOME.bar' | translate}}" (ionInput)="getItems($event)"></ion-searchbar>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -23,7 +23,7 @@
         </ion-item-option>
       </ion-item-options>
       <ion-item>
-   <ion-label (click)="this.abrirnota(this.nota)"> <h1>{{nota.titulo}}</h1> <br><p>{{nota.texto}}</p></ion-label>  
+   <ion-label (click)="this.openNote(this.nota)"> <h1>{{nota.titulo}}</h1> <br><p>{{nota.texto}}</p></ion-label>  
       </ion-item>
       <ion-item-options side="end" (ionSwipe)="this.editaNota(nota)">
         <ion-item-option color="primary" expandable (click)="this.editaNota(nota)">

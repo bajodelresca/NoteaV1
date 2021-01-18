@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { NotaPageRoutingModule } from './nota-routing.module';
 
 import { NotaPage } from './nota.page';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NotaPageRoutingModule
+    NotaPageRoutingModule,
+    Geolocation
   ],
   declarations: [NotaPage]
 })

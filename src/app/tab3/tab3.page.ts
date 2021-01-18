@@ -4,6 +4,11 @@ import { Shake } from '@ionic-native/shake/ngx';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { ThemeService } from '../services/theme.service';
+import { Usuario } from '../model/usuario';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
+import { ToastloadService } from '../services/toastload.service';
 
 @Component({
   selector: 'app-tab3',
@@ -11,13 +16,23 @@ import { LoadingController, ToastController } from '@ionic/angular';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  lang:any;
+  
+  themeMode=-1;
+
+
+  usuario: Usuario;
 
   constructor(private flashlight: Flashlight,
     private authS: AuthService,
     private router: Router,
-    public toastController: ToastController,
-    public loadingController: LoadingController) {
-         
+    private theme: ThemeService,
+    private translate:TranslateService,
+    private language:LanguageService,
+    private tl:ToastloadService) {
+    this.usuario = authS.user;
+    
+
   }
   public async logout() {
     await this.authS.logout();
@@ -25,35 +40,31 @@ export class Tab3Page {
       this.router.navigate(['/login'])
     }
   }
-  
-  
-  public async botonlinterna(){
-    await this.presentLoading();
-    if (this.flashlight.isSwitchedOn()) {      
+
+
+  public async botonlinterna() {
+    await this.tl.presentLoading();
+    if (this.flashlight.isSwitchedOn()) {
       this.flashlight.switchOff()
-      this.loadingController.dismiss();
-      this.presentToast("Linterna apagada","success");
-    }else{
+      this.tl.loadingController.dismiss();
+      this.tl.presentToast("Linterna apagada", "success");
+    } else {
       this.flashlight.switchOn()
-      this.loadingController.dismiss();
-      this.presentToast("Linterna encendida","success");
+      this.tl.loadingController.dismiss();
+      this.tl.presentToast("Linterna encendida", "success");
     }
   }
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: '',
-      spinner: "crescent"
-    });
-    await loading.present();
+  switchtheme($event,mode){
+    this.theme.changeTheme($event,mode);
   }
-  async presentToast(msg:string,col:string) {
-    const toast = await this.toastController.create({
-      message: msg,
-      color: col,
-      duration: 2000,
-      position:"top"
-    });
-    toast.present();
-  }
+  
+
+  
+
+  
+lnga=this.language.selected;
+switchLanguage($event) {
+  this.language.setLanguage($event.target.value);
+  console.log($event.target.value);
+}
 }

@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { NotaPage } from '../pages/nota/nota.page';
 import { Shake } from '@ionic-native/shake/ngx';
+import { ToastloadService } from '../services/toastload.service';
 
 @Component({
   selector: 'app-tab1',
@@ -27,9 +28,8 @@ export class Tab1Page implements OnInit {
     private authS: AuthService,
     private router: Router,
     private alertController: AlertController,
-    public loadingController: LoadingController,
-    public toastController: ToastController,
-    private shake: Shake) {
+    private shake: Shake,
+    private tl:ToastloadService) {
       this.shake.startWatch().subscribe(data => {
         this.router.navigate(['/tabs/tab2'])
         });      
@@ -126,8 +126,8 @@ export class Tab1Page implements OnInit {
       this.listaNotas = tmp;
       this.items = this.listaNotas;
       
-      this.loadingController.dismiss();
-      this.presentToast("Nota eliminada correctamente", "success");
+      this.tl.loadingController.dismiss();
+      this.tl.presentToast("Nota eliminada correctamente", "success");
     })
       .catch(err => {
         //Error
@@ -143,25 +143,13 @@ export class Tab1Page implements OnInit {
     });
     return await modal.present();
   }
+  
+  public openNote(nota: Nota){
+    this.notasS.abrirnota(nota);
+  }
 
  
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: '',
-      spinner: "crescent"
-    });
-    await loading.present();
-  }
-  async presentToast(msg: string, col: string) {
-    const toast = await this.toastController.create({
-      message: msg,
-      color: col,
-      duration: 2000,
-      position: "top"
-    });
-    toast.present();
-  }
+  
   
   getItems(ev: any) {
     const val = ev.target.value;
@@ -173,15 +161,6 @@ export class Tab1Page implements OnInit {
     }
   }
   
-  public async abrirnota(nota:Nota){
-    const modal= await this.modalController.create({
-      component:NotaPage,
-      cssClass:'my-custom-note',
-      componentProps:{
-        nota:nota
-      }
-    });
-    return await modal.present();
-  }
+  
   
 }
