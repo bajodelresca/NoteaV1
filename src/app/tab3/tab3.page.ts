@@ -54,9 +54,29 @@ export class Tab3Page {
       this.tl.presentToast("Linterna encendida", "success");
     }
   }
-  switchtheme($event,mode){
-    this.theme.changeTheme($event,mode);
-  }
+  changeTheme($event, mode) {
+    console.log($event);
+    this.themeMode = mode;
+    if($event.detail.checked){
+      switch(mode){
+        case 0:
+          document.body.classList.toggle('dark-theme');
+          break;
+        case 1:
+          document.body.classList.toggle('blue-theme');
+          break;
+        case 2:
+          document.body.classList.toggle('orange-theme');
+          break;
+      }
+    } else {
+      this.themeMode = -1;
+      document.body.classList.remove('dark-theme');
+      document.body.classList.remove('blue-theme');
+      document.body.classList.remove('orange-theme');
+    }
+
+}
   
 
   
